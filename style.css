@@ -142,3 +142,7 @@ main, footer { position: relative; z-index: 1; }
 .nav.next { right: .6rem; }
 .count { position: absolute; bottom: .6rem; right: .8rem; font-size: .8rem; color: var(--muted); background: rgba(15, 14, 14, .75); padding: .1rem .55rem; border-radius: 99px; }
 .gallery.single .nav, .gallery.single .count { display: none; }
+
+.track { cursor: grab; }
+.track.drag { scroll-snap-type: none; cursor: grabbing; user-select: none; }
+.track img { user-select: none; -webkit-user-drag: none; }

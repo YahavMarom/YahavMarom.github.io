@@ -62,6 +62,24 @@ document.querySelectorAll(".gallery").forEach((g) => {
   const go = (d) => track.scrollBy({ left: d * w(), behavior: "smooth" });
   g.querySelector(".prev").addEventListener("click", () => go(-1));
   g.querySelector(".next").addEventListener("click", () => go(1));
+  /* Mouse drag (touch and trackpads already scroll natively) */
+  let down = false, startX = 0, startL = 0;
+  track.addEventListener("dragstart", (e) => e.preventDefault());
+  track.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "mouse" || e.button !== 0) return;
+    down = true; startX = e.clientX; startL = track.scrollLeft;
+    track.classList.add("drag");
+  });
+  addEventListener("pointermove", (e) => {
+    if (down) track.scrollLeft = startL - (e.clientX - startX);
+  });
+  addEventListener("pointerup", () => {
+    if (!down) return;
+    down = false;
+    track.classList.remove("drag");
+    track.scrollTo({ left: pos() * w(), behavior: "smooth" });
+  });
+
   track.addEventListener("scroll", () => {
     show();
     clearTimeout(timer);
