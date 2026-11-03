@@ -92,11 +92,14 @@
         <h3>Book Recommendation System</h3>
         <span class="tag">Python · Flask</span>
       </div>
-      <p>A full-stack Flask app that suggests books from a dataset of 10,000+ titles.</p>
+      <video src="images/demo.mp4" autoplay loop muted playsinline controls
+             style="width:100%;border-radius:8px;margin:0 0 12px" aria-label="Demo of the book recommendation app"></video>
+      <p>A Flask web app that recommends similar books from about 8,700 Goodreads titles.</p>
       <ul>
-        <li>Hybrid retrieval engine combining TF-IDF vectorization and K-Nearest Neighbors.</li>
-        <li>Combines genre, plot descriptions and user ratings to improve relevance.</li>
-        <li>Pre-computes and pickles similarity matrices at setup, cutting query time from about 4 seconds to milliseconds.</li>
+        <li>Combines sentence embeddings of descriptions with genre and rating signals using weighted cosine similarity.</li>
+        <li>Live autocomplete, cover art, and sliders that re-rank results without a page reload.</li>
+        <li>Each result explains how much of the match came from description, genres and rating.</li>
+        <li>Precomputes matrices and cover URLs at setup, cutting query time from about 4 seconds to milliseconds</li>
       </ul>
       <a class="key link" href="https://github.com/YahavMarom" target="_blank" rel="noopener">View on GitHub</a>
     </article>
