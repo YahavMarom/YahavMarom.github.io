@@ -15,14 +15,17 @@ if (copyBtn) {
   });
 }
 
-/* Galleries: circular swipe. Missing images are dropped; a clone of the last
-   image sits before the first and a clone of the first after the last, and we
-   silently jump to the real slide once scrolling settles on a clone. */
+/* Galleries: circular swipe for images and videos. Missing media is dropped;
+   a clone of the last slide sits before the first and a clone of the first
+   after the last, and we silently jump to the real slide once scrolling
+   settles on a clone. */
+const MEDIA = "img, video";
+
 document.querySelectorAll(".gallery").forEach((g) => {
   const track = g.querySelector(".track");
   const count = g.querySelector(".count");
-  const imgs = [...track.querySelectorAll("img")];
-  let pending = imgs.length, n = 0, timer;
+  const slides = [...track.querySelectorAll(MEDIA)];
+  let pending = slides.length, n = 0, timer;
 
   const w = () => track.clientWidth;
   const pos = () => Math.round(track.scrollLeft / w());
@@ -40,31 +43,52 @@ document.querySelectorAll(".gallery").forEach((g) => {
   };
 
   const init = () => {
-    const real = [...track.querySelectorAll("img")];
+    const real = [...track.querySelectorAll(MEDIA)];
     n = real.length;
     if (n === 0) { g.remove(); return; }
-    if (n === 1) { g.classList.add("single"); return; }
-    const first = real[0].cloneNode();
-    const last = real[n - 1].cloneNode();
-    [first, last].forEach((c) => { c.alt = ""; c.setAttribute("aria-hidden", "true"); });
-    track.prepend(last);
-    track.append(first);
-    track.scrollLeft = w();
-    show();
+    if (n === 1) { g.classList.add("single"); }
+    else {
+      const first = real[0].cloneNode(true);
+      const last = real[n - 1].cloneNode(true);
+      [first, last].forEach((c) => { c.setAttribute("aria-hidden", "true"); if (c.alt) c.alt = ""; });
+      track.prepend(last);
+      track.append(first);
+      track.scrollLeft = w();
+      show();
+    }
+    track.querySelectorAll("video").forEach((v) => { v.muted = true; v.play().catch(() => {}); });
   };
 
-  const settle = () => { if (--pending === 0) init(); };
-  imgs.forEach((img) => {
-    if (img.complete) { if (!img.naturalWidth) img.remove(); settle(); }
-    else {
-      img.addEventListener("load", settle);
-      img.addEventListener("error", () => { img.remove(); settle(); });
+  /* Each slide reports exactly once: loaded (keep) or failed (remove). */
+  slides.forEach((m) => {
+    let done = false;
+    const finish = (ok) => {
+      if (done) return;
+      done = true;
+      if (!ok) m.remove();
+      if (--pending === 0) init();
+    };
+    if (m.tagName === "VIDEO") {
+      /* Poll instead of relying on events, which can fire before this script runs */
+      const check = () => {
+        if (done) return;
+        if (m.readyState >= 1) return finish(true);
+        if (m.networkState === 3) return finish(false); /* NETWORK_NO_SOURCE: file missing */
+        setTimeout(check, 200);
+      };
+      m.addEventListener("loadedmetadata", check, { once: true });
+      check();
+    } else {
+      if (m.complete) return finish(m.naturalWidth > 0);
+      m.addEventListener("load", () => finish(true), { once: true });
+      m.addEventListener("error", () => finish(false), { once: true });
     }
   });
 
   const go = (d) => track.scrollBy({ left: d * w(), behavior: "smooth" });
   g.querySelector(".prev").addEventListener("click", () => go(-1));
   g.querySelector(".next").addEventListener("click", () => go(1));
+
   /* Mouse drag (touch and trackpads already scroll natively) */
   let down = false, startX = 0, startL = 0;
   track.addEventListener("dragstart", (e) => e.preventDefault());

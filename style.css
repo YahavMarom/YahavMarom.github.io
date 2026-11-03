@@ -132,7 +132,8 @@ main, footer { position: relative; z-index: 1; }
   background: #0f0e0e;
 }
 .track::-webkit-scrollbar { display: none; }
-.project .track img {
+.project .track img,
+.project .track video {
   flex: 0 0 100%; width: 100%; margin: 0; border-radius: 0;
   aspect-ratio: 16 / 9; object-fit: contain;
   scroll-snap-align: center;
@@ -145,4 +146,4 @@ main, footer { position: relative; z-index: 1; }
 
 .track { cursor: grab; }
 .track.drag { scroll-snap-type: none; cursor: grabbing; user-select: none; }
-.track img { user-select: none; -webkit-user-drag: none; }
+.track img, .track video { user-select: none; -webkit-user-drag: none; }
