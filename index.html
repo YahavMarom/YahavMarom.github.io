@@ -96,10 +96,9 @@
              style="width:100%;border-radius:8px;margin:0 0 12px" aria-label="Demo of the book recommendation app"></video>
       <p>A Flask web app that recommends similar books from about 8,700 Goodreads titles.</p>
       <ul>
-        <li>Combines sentence embeddings of descriptions with genre and rating signals using weighted cosine similarity.</li>
-        <li>Live autocomplete, cover art, and sliders that re-rank results without a page reload.</li>
-        <li>Each result explains how much of the match came from description, genres and rating.</li>
-        <li>Precomputes matrices and cover URLs at setup, cutting query time from about 4 seconds to milliseconds</li>
+        <li>Compares books using sentence embeddings of descriptions, genre tags and ratings, combined with adjustable weights.</li>
+        <li>Autocomplete, cover art, and sliders that re-rank results instantly, with a breakdown of why each book was suggested.</li>
+        <li>Precomputes matrices at setup instead of on every search, cutting search time from about 0.7 s to about 3 ms.</li>
       </ul>
       <a class="key link" href="https://github.com/YahavMarom" target="_blank" rel="noopener">View on GitHub</a>
     </article>
