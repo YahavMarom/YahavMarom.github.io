@@ -116,3 +116,29 @@ footer { padding-block: 4rem 2rem; color: var(--muted); font-size: .9rem; }
   html { scroll-behavior: auto; }
   .key { transition: none; }
 }
+
+/* Starry background */
+#stars { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+main, footer { position: relative; z-index: 1; }
+.nowrap { white-space: nowrap; }
+
+/* Image gallery (swipe, or use the arrow keys) */
+.gallery { position: relative; margin: .5rem 0 1.25rem; }
+.track {
+  display: flex; overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  border-radius: .7rem;
+  background: #0f0e0e;
+}
+.track::-webkit-scrollbar { display: none; }
+.project .track img {
+  flex: 0 0 100%; width: 100%; margin: 0; border-radius: 0;
+  aspect-ratio: 16 / 9; object-fit: contain;
+  scroll-snap-align: center;
+}
+.nav { position: absolute; top: 50%; translate: 0 -50%; padding: .3rem .8rem; font-size: 1.4rem; line-height: 1; }
+.nav.prev { left: .6rem; }
+.nav.next { right: .6rem; }
+.count { position: absolute; bottom: .6rem; right: .8rem; font-size: .8rem; color: var(--muted); background: rgba(15, 14, 14, .75); padding: .1rem .55rem; border-radius: 99px; }
+.gallery.single .nav, .gallery.single .count { display: none; }

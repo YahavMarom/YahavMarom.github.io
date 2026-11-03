@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<canvas id="stars" aria-hidden="true"></canvas>
 
 <header class="top">
   <a class="brand key" href="#top">YM</a>
@@ -24,7 +25,7 @@
   <section class="hero">
     <p class="muted">Tel Aviv University · BSc Mathematics &amp; Computer Science</p>
     <h1>Yahav Marom</h1>
-    <p class="lead">I build things in C++ and enjoy problems that sit between math and systems. Right now I'm learning embedded development on ARM Cortex-M.</p>
+    <p class="lead">I build things in C++ and enjoy problems that sit between math and systems. Right now I'm learning embedded development on ARM <span class="nowrap">Cortex-M</span>.</p>
     <div class="suggest" aria-label="Focus areas">
       <span class="key">C / C++</span>
       <span class="key hot">Algorithms</span>
@@ -54,7 +55,7 @@
       <p><span class="muted">Languages</span><span class="keys"><span class="key">C</span><span class="key">C++</span><span class="key">Python</span><span class="key">Java</span></span></p>
       <p><span class="muted">Libraries</span><span class="keys"><span class="key">Flask</span><span class="key">NumPy</span><span class="key">pandas</span><span class="key">scikit-learn</span><span class="key">SciPy</span><span class="key">Matplotlib</span></span></p>
       <p><span class="muted">Tools</span><span class="keys"><span class="key">Git</span><span class="key">Linux</span><span class="key">Shell</span><span class="key">SQL</span><span class="key">WSL</span></span></p>
-    </div>
+      </div>
   </section>
 
   <section id="projects">
@@ -65,27 +66,24 @@
         <h3>3D Raytracer</h3>
         <span class="tag">C++</span>
       </div>
+      <!-- Add renders to images/ as raytracer-1.png, raytracer-2.png, ... and list them here -->
+      <div class="gallery" aria-label="Raytracer renders">
+        <div class="track">
+          <img src="images/raytracer-1.png" alt="Raytraced scene 1">
+          <img src="images/raytracer-2.png" alt="Raytraced scene 2">
+          <img src="images/raytracer-3.png" alt="Raytraced scene 3">
+        </div>
+        <button class="key nav prev" type="button" aria-label="Previous image">&#8249;</button>
+        <button class="key nav next" type="button" aria-label="Next image">&#8250;</button>
+        <span class="count" aria-live="polite"></span>
+      </div>
       <p>A multi-threaded ray tracing engine written from scratch in modern C++.</p>
       <ul>
         <li>Intersection tests for five primitives: spheres, cubes, planes, cylinders and cones.</li>
         <li>Recursive reflection and refraction.</li>
         <li>Tile-based multi-threading that spreads pixel rendering across all CPU cores to cut render time.</li>
       </ul>
-      <img src="images/scene.png" alt="Raytraced scene"> 
       <a class="key link" href="https://github.com/YahavMarom/Raytracer" target="_blank" rel="noopener">View on GitHub</a>
-    </article>
-
-    <article class="project">
-      <div class="head">
-        <h3>Bare-metal Tetris on STM32</h3>
-        <span class="tag wip">In progress</span>
-      </div>
-      <p>Tetris running directly on a Nucleo-F446RE, drawing to an ST7789 display (no touch), written in C.</p>
-      <ul>
-        <li>Hardware: STM32 Nucleo-F446RE (ARM Cortex-M4) and an ST7789 display.</li>
-        <li>Goal: peripheral setup, display driver and game loop, written without an operating system.</li>
-        <li>I'm learning ARM and microcontroller programming alongside it. Code, photos and a write-up will be added here.</li>
-      </ul>
     </article>
 
     <article class="project">
@@ -100,6 +98,19 @@
         <li>Pre-computes and pickles similarity matrices at setup, cutting query time from about 4 seconds to milliseconds.</li>
       </ul>
       <a class="key link" href="https://github.com/YahavMarom" target="_blank" rel="noopener">View on GitHub</a>
+    </article>
+
+    <article class="project">
+      <div class="head">
+        <h3>Bare-metal Tetris on STM32</h3>
+        <span class="tag wip">In progress</span>
+      </div>
+      <p>Tetris running directly on a Nucleo-F446RE, drawing to an ST7789 display (no touch), written in C.</p>
+      <ul>
+        <li>Hardware: STM32 Nucleo-F446RE (ARM Cortex-M4) and an ST7789 display.</li>
+        <li>Goal: peripheral setup, display driver and game loop, written without an operating system.</li>
+        <li>I'm learning ARM and microcontroller programming alongside it. Code, photos and a write-up will be added here.</li>
+      </ul>
     </article>
   </section>
 
@@ -116,7 +127,6 @@
   </section>
 </main>
 
-<footer>© <span id="year">2026</span> Yahav Marom</footer>
 <script src="script.js"></script>
 </body>
 </html>
