@@ -1,16 +1,19 @@
 const email = "marom.yahav1@gmail.com";
 const statusEl = document.getElementById("status");
+const copyBtn = document.getElementById("copy");
 
-document.getElementById("year").textContent = new Date().getFullYear();
-
-document.getElementById("copy").addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(email);
-    statusEl.textContent = "Email copied.";
-  } catch {
-    statusEl.textContent = "Couldn't copy automatically. My email is " + email;
-  }
-});
+if (copyBtn) {
+  copyBtn.addEventListener("click", async () => {
+    let msg;
+    try {
+      await navigator.clipboard.writeText(email);
+      msg = "Email copied.";
+    } catch {
+      msg = "Couldn't copy automatically. My email is " + email;
+    }
+    if (statusEl) statusEl.textContent = msg;
+  });
+}
 
 /* Galleries: circular swipe. Missing images are dropped; a clone of the last
    image sits before the first and a clone of the first after the last, and we
